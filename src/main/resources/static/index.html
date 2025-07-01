@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>📚 Library Management System</h1>
+
+<!-- Add User -->
+<section>
+    <h2>Create User</h2>
+    <input id="userName" placeholder="Name">
+    <input id="userEmail" placeholder="Email">
+    <button onclick="addUser()">Add User</button>
+</section>
+
+<!-- Add Book -->
+<section>
+    <h2>Add Book</h2>
+    <input id="bookTitle" placeholder="Title">
+    <input id="bookAuthor" placeholder="Author">
+    <button onclick="addBook()">Add Book</button>
+</section>
+
+<!-- Borrow/Return Book -->
+<section>
+    <h2>Borrow / Return Book</h2>
+    <input id="borrowBookId" placeholder="Book ID">
+    <input id="borrowUserId" placeholder="User ID">
+    <button onclick="borrowBook()">Borrow</button>
+    <button onclick="returnBook()">Return</button>
+</section>
+
+<!-- Search Books -->
+<section>
+    <h2>Search Books</h2>
+    <input id="searchInput" placeholder="Enter title or author">
+    <button onclick="searchBooks()">Search</button>
+</section>
+
+<!-- filtering books  -->
+<!-- Filter Books by Status -->
+<section>
+    <h2>Filter by Status</h2>
+    <select id="statusFilter" onchange="filterBooks()">
+        <option value="all">All</option>
+        <option value="borrowed">Borrowed</option>
+        <option value="available">Available</option>
+    </select>
+</section>
+
+
+
+<!-- Book List -->
+<section>
+    <h2>All Books</h2>
+    <div id="bookList"></div>
+</section>
+
+<!-- User List -->
+<section>
+    <h2>All Users</h2>
+    <div id="userList"></div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
