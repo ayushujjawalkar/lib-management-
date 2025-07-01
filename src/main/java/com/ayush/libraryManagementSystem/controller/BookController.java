@@ -17,12 +17,6 @@ public class BookController
     @Autowired
     private BookService bookService;
 
-//    @GetMapping
-//    List<Book> getAllBooks ()
-//    {
-//        return bookService.findAll();
-//    }
-
     @GetMapping("/all")
     public List<Book> getAllBooks() {
         return bookService.findAll();
@@ -45,20 +39,7 @@ public class BookController
         // Additional logic to ensure you're updating the correct book
         return bookService.save(book);
     }
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
-//        try {
-//            System.out.println("Received DELETE request for book ID: " + id + " (Type: " + id.getClass() + ")");
-//            bookService.deleteById(id);
-//            return ResponseEntity.ok("Book deleted successfully");
-//        } catch (IllegalArgumentException e) {
-//            System.out.println("Delete failed: " + e.getMessage());
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        } catch (Exception e) {
-//            System.out.println("Unexpected error: " + e.getMessage());
-//            return ResponseEntity.status(500).body("Internal server error");
-//        }
-//    }
+
      //this is for search a book by title or author
     @GetMapping("/search")
     public List<Book> searchBooks(@RequestParam("keyword") String keyword) {
@@ -79,18 +60,6 @@ public class BookController
         }
     }
 
-
-
-//    @PostMapping("/{bookId}/borrow/{userId}")
-//    public ResponseEntity<Book> borrowBook(@PathVariable Long bookId, @PathVariable Long userId)
-//    {
-//        Book borrowedBook = bookService.borrowBook(bookId, userId);
-//        if (borrowedBook != null) {
-//            return ResponseEntity.ok(borrowedBook);
-//        } else {
-//            return ResponseEntity.badRequest().build(); // or a more descriptive error response
-//        }
-//    }
 @Autowired
 private EmailService emailService;
                      //borrow book with email notifications
@@ -117,18 +86,6 @@ private EmailService emailService;
         }
     }
 
-
-
-//    @PostMapping("/{bookId}/return")
-//    public ResponseEntity<Book> returnBook(@PathVariable Long bookId)
-//    {
-//        Book returnedBook = bookService.returnBook(bookId);
-//        if (returnedBook != null) {
-//            return ResponseEntity.ok(returnedBook);
-//        } else {
-//            return ResponseEntity.badRequest().build(); // or a more descriptive error response
-//        }
-//    }
       // return book with email notification but email is not working
     @PostMapping("/{bookId}/return")
     public ResponseEntity<Book> returnBook(@PathVariable Long bookId) {
@@ -155,10 +112,6 @@ private EmailService emailService;
             return ResponseEntity.badRequest().build(); // or a more descriptive error response
         }
     }
-
-
-
-
 
     //filter book  by status
     @GetMapping("/filter")

@@ -23,7 +23,8 @@ public class BookService {
 
 
     //  this is for search a book by title or author
-    public List<Book> searchBooks(String keyword) {
+    public List<Book> searchBooks(String keyword)
+    {
         return bookRepository.findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCase(keyword, keyword);
     }
 
@@ -66,16 +67,6 @@ public class BookService {
         return null;
     }
 
-//    public Book returnBook(Long bookId) {
-//        Book book = findById(bookId);
-//        if (book != null && book.isBorrowed()) {
-//            book.setBorrowedBy(null);
-//            book.setBorrowed(false);
-//            return save(book);
-//        }
-//        // Handle errors (e.g., book not found, book not borrowed)
-//        return null;
-//    }
 
     public Book returnBook(Long bookId) {
         Book book = findById(bookId);
