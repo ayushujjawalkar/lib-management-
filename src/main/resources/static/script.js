@@ -27,36 +27,7 @@ document.addEventListener('click', function(e) {
         deleteBook(bookId);
     }
 });
-// Add user with validation and error handling
-//async function addUser() {
-//    try {
-//        const name = document.getElementById('userName').value.trim();
-//        const email = document.getElementById('userEmail').value.trim();
-//
-//        if (!name || !email) {
-//            throw new Error('Name and email are required');
-//        }
-//
-//        const response = await fetch(`${baseUrl}/api/users`, {
-//            method: 'POST',
-//            headers: { 'Content-Type': 'application/json' },
-//            body: JSON.stringify({ name, email })
-//        });
-//
-//        if (!response.ok) {
-//            const error = await response.json();
-//            throw new Error(error.message || 'Failed to add user');
-//        }
-//
-//        await loadUsers();
-//        // Clear form fields after successful addition
-//        document.getElementById('userName').value = '';
-//        document.getElementById('userEmail').value = '';
-//    } catch (error) {
-//        console.error('Error adding user:', error);
-//        alert(error.message);
-//    }
-//}
+
 
 
 async function addUser() {
@@ -231,8 +202,8 @@ async function borrowBook() {
 }
 
 // Return book with error handling
-async function returnBook()
- {
+//
+async function returnBook() {
     try {
         const bookId = document.getElementById('borrowBookId').value.trim();
 
@@ -250,12 +221,22 @@ async function returnBook()
             throw new Error(error.message || 'Failed to return book');
         }
 
+        const returnedBook = await response.json();
+
+        // ✅ Show fine message if applicable
+        if (returnedBook.fine && returnedBook.fine > 0) {
+            alert(`Book returned! Fine: ₹${returnedBook.fine}`);
+        } else {
+            alert('Book returned successfully!');
+        }
+
         await loadBooks();
     } catch (error) {
         console.error('Error returning book:', error);
         alert(error.message);
     }
 }
+
 
 //new for search book with author or title
 // 🔍 Search books by title/author
@@ -276,14 +257,15 @@ async function searchBooks() {
 }
 
 
-// 🧩 Reusable render function
-function renderBooks(books)
-{
+
+function renderBooks(books) {
     document.getElementById("bookList").innerHTML = books.map(book => `
         <div class="book">
             <strong>${book.title}</strong> by ${book.author}
             <br>Book ID: ${book.id}
             <br>Status: ${book.borrowed ? 'Borrowed by User ' + (book.borrowedBy?.id ?? '?') : 'Available'}
+            ${book.borrowed && book.dueDate ? `<br>Due Date: ${book.dueDate}` : ''}
+            ${book.borrowed && book.fine > 0 ? `<br>Fine: ₹${book.fine}` : ''}
             <br>
             <button class="delete-btn" data-id="${book.id}">Delete</button>
         </div>
