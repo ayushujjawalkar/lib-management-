@@ -2,7 +2,6 @@ package com.ayush.libraryManagementSystem.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.LocalDate;
 
 @Getter
@@ -11,7 +10,6 @@ import java.time.LocalDate;
 
 public class Book
 {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -48,27 +46,33 @@ public class Book
     private double fine;
 
 
-    public Long getId() {
+    public Long getId()
+    {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id)
+    {
         this.id = id;
     }
 
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(String title)
+    {
         this.title = title;
     }
 
-    public String getAuthor() {
+    public String getAuthor()
+    {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(String author)
+    {
         this.author = author;
     }
 
@@ -79,19 +83,23 @@ public class Book
 
 
     public boolean isBorrowed()
+
     {
         return borrowed;
     }
 
-    public void setBorrowed(boolean borrowed) {
+    public void setBorrowed(boolean borrowed)
+    {
         this.borrowed = borrowed;
     }
 
-    public User getBorrowedBy() {
+    public User getBorrowedBy()
+    {
         return borrowedBy;
     }
 
-    public void setBorrowedBy(User borrowedBy) {
+    public void setBorrowedBy(User borrowedBy)
+    {
         this.borrowedBy = borrowedBy;
     }
 

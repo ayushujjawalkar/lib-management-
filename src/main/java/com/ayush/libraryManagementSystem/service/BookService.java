@@ -1,12 +1,10 @@
 package com.ayush.libraryManagementSystem.service;
-
 import com.ayush.libraryManagementSystem.model.User;
 import com.ayush.libraryManagementSystem.repository.UserRepository;
 import com.ayush.libraryManagementSystem.model.Book;
 import com.ayush.libraryManagementSystem.repository.BookRepoository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -29,38 +27,37 @@ public class BookService {
     {
         return bookRepository.findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCase(keyword, keyword);
     }
-
-
-
-
-
-    public List<Book> findAll() {
+    public List<Book> findAll()
+    {
         return bookRepository.findAll();
     }
-
-    public Book findById(Long id) {
+    public Book findById(Long id)
+    {
         return bookRepository.findById(id).orElse(null);
     }
-
-    public Book save(Book book) {
+    public Book save(Book book)
+    {
         return bookRepository.save(book);
     }
-
-    public void deleteById(Long id) {
+    public void deleteById(Long id)
+    {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Book not found with ID: " + id));
 
-        if (book.isBorrowed()) {
+        if (book.isBorrowed())
+        {
             throw new IllegalArgumentException("Cannot delete a borrowed book");
         }
 
         bookRepository.delete(book);
     }
-    public Book borrowBook(Long bookId, Long userId) {
+    public Book borrowBook(Long bookId, Long userId)
+    {
         Book book = findById(bookId);
         User user = userRepository.findById(userId).orElse(null);
 
-        if (book != null && !book.isBorrowed() && user != null) {
+        if (book != null && !book.isBorrowed() && user != null)
+        {
             book.setBorrowedBy(user);
             book.setBorrowed(true);
             // ✅ Set borrow date and due date (e.g., 14 days later)
@@ -73,31 +70,13 @@ public class BookService {
     }
 
 
-//    public Book returnBook(Long bookId) {
-//        Book book = findById(bookId);
-//        if (book != null && book.isBorrowed()) {
-//            // 👇 Save reference before setting to null
-//            User borrower = book.getBorrowedBy();
-//
-//            // Set to null for update
-//            book.setBorrowedBy(null);
-//            book.setBorrowed(false);
-//
-//            Book updated = save(book);
-//
-//            // 👇 Restore borrower in returned object (just for controller use)
-//            updated.setBorrowedBy(borrower);
-//
-//            return updated;
-//        }
-//        return null;
-//    }
-    //new for check
-
-    public Book returnBook(Long bookId) {
+    //new for check local date and all
+    public Book returnBook(Long bookId)
+    {
         Book book = findById(bookId);
 
-        if (book != null && book.isBorrowed()) {
+        if (book != null && book.isBorrowed())
+        {
             User borrower = book.getBorrowedBy();
 
             // Calculate fine if overdue
@@ -106,11 +85,14 @@ public class BookService {
             long overdueDays = 0;
             double finePerDay = 5.0; // ₹5 fine per day (example)
 
-            if (dueDate != null && today.isAfter(dueDate)) {
+            if (dueDate != null && today.isAfter(dueDate))
+            {
                 overdueDays = ChronoUnit.DAYS.between(dueDate, today);
                 double fine = overdueDays * finePerDay;
                 book.setFine(fine); // Optional: store in DB
-            } else {
+            }
+            else
+            {
                 book.setFine(0); // No fine
             }
 
